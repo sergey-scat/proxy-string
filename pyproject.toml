@@ -1,0 +1,114 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "proxy-string"
+dynamic = ["version"]
+authors = [
+  { name="Sergey Scat", email="py.unicaps@gmail.com" },
+]
+description = "Proxy server data representation and parser package."
+readme = "README.md"
+requires-python = ">=3.12,<4"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development :: Libraries"
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+  "aiofiles>=25.1.0",
+  "attrs>=26.1.0",
+  "pywhatwgurl>=0.1.2",
+]
+
+[project.optional-dependencies]
+ada_url = [
+  "ada-url>=4.0.0",
+]
+can_ada = [
+  "can-ada>=3.1.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/sergey-scat/proxy-string"
+Issues = "https://github.com/sergey-scat/proxy-string/issues"
+
+[dependency-groups]
+dev = [
+  "pytest>=9.2.0",
+  "pytest-asyncio>=1.4.0",
+  "pytest-cov>=7.1.0",
+  "ruff>=0.17.4",
+  "ty>=0.0.100",
+]
+
+[tool.hatch.version]
+path = "src/proxy_string/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+  "src",
+  "README.md",
+  "LICENSE",
+  "pyproject.toml",
+]
+
+# ---- ruff --------------------------------------------------------
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+src = ["src/proxy_string", "tests"]
+exclude = ["assets/"]
+
+[tool.ruff.lint]
+select = [
+  "E", "W",   # pycodestyle
+  "F",        # pyflakes
+  "I",        # isort
+  "B",        # bugbear
+  "UP",       # pyupgrade
+  "N",        # pep8-naming
+  "SIM",      # simplify
+  "RUF",      # ruff-specific
+  "C90",      # mccabe complexity
+  "PLR",      # pylint refactor (too-many-statements, too-many-branches)
+]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PLR2004", "PLR0913", "PLR0917"]
+
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pylint]
+max-statements = 50
+max-branches = 12
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# ---- ty ----------------------------------------------------------
+[tool.ty.src]
+include = ["src"]
+
+# ---- pytest ------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_default_fixture_loop_scope = "function"
+addopts = "-ra --strict-markers --cov=src --cov-report=term-missing"
