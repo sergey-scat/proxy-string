@@ -1,0 +1,59 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        python-version: "3.12"
+        enable-cache: true
+
+    - name: Install dependencies
+      run: uv sync --locked --all-extras --dev
+
+    - name: Run Ruff (Lint & Format)
+      run: uv run ruff check . && uv run ruff format --check .
+
+    - name: Run ty (Type Check)
+      run: uv run ty check --output-format github
+
+    - name: Run Pytest
+      run: uv run pytest tests
+
+  deploy:
+    needs: test-and-lint
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+
+    environment:
+      name: pypi
+      url: https://pypi.org
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        python-version: "3.12"
+        enable-cache: true
+
+    - name: Build package
+      run: uv build
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
