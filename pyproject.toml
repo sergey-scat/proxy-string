@@ -44,6 +44,7 @@ can_ada = [
 
 [project.urls]
 Homepage = "https://github.com/sergey-scat/proxy-string"
+Documentation = "https://sergey-scat.github.io/proxy-string/"
 Issues = "https://github.com/sergey-scat/proxy-string/issues"
 
 [dependency-groups]
@@ -53,6 +54,11 @@ dev = [
   "pytest-cov>=7.1.0",
   "ruff>=0.17.4",
   "ty>=0.0.100",
+]
+docs = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.8.1",
+    "mkdocstrings[python]>=1.0.8",
 ]
 
 [tool.hatch.version]

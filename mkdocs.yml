@@ -1,0 +1,90 @@
+site_name: proxy-string
+site_description: Lightweight, type-safe Python library for parsing, validating, and converting proxy server connection data.
+site_url: https://sergey-scat.github.io/proxy-string/
+repo_url: https://github.com/sergey-scat/proxy-string
+repo_name: sergey-scat/proxy-string
+
+theme:
+  name: material
+  logo: assets/logo.jpg
+  favicon: assets/logo.jpg
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            docstring_section_style: table
+            show_root_heading: true
+            show_root_toc_entry: false
+            show_source: true
+            show_signature_annotations: true
+            separate_signature: true
+            signature_crossrefs: true
+            merge_init_into_class: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quickstart: getting-started/quickstart.md
+  - User Guides:
+      - Parsing Sources: guides/parsing.md
+      - Supported Formats: guides/formats.md
+      - Modifying Proxies: guides/evolution.md
+      - Client Integrations: guides/integrations.md
+  - API Reference:
+      - ProxyServer: reference/proxy-server.md
+      - Enumerations: reference/enums.md
+      - Parsers: reference/parsers.md
+      - Exceptions: reference/exceptions.md
+      - URL Tools: reference/url-tools.md
+
